@@ -1,28 +1,29 @@
 package ru.java.security.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.java.security.dto.JwtAuthenticationResponse;
+import ru.java.security.dto.SignInRequest;
+import ru.java.security.dto.SignUpRequest;
+import ru.java.security.service.AuthenticationService;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "All role!";
+    private final AuthenticationService authenticationService;
+
+    @PostMapping("/sign-up")
+    public JwtAuthenticationResponse signUp(@RequestBody final SignUpRequest request) {
+        return authenticationService.signUp(request);
     }
 
-    @GetMapping("/user")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    public String user() {
-        return "User";
-    }
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String admin() {
-        return "Admin!";
+    @PostMapping("/sign-in")
+    public JwtAuthenticationResponse signIn(@RequestBody final SignInRequest request) {
+        return authenticationService.signIn(request);
     }
 }
