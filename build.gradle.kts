@@ -21,13 +21,23 @@ repositories {
     mavenCentral()
 }
 
+val mapStruct = "1.5.5.Final"
+val lombokMapstructBinding = "0.2.0"
+
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    compileOnly("org.projectlombok:lombok")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    implementation("org.mapstruct:mapstruct:$mapStruct")
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapStruct")
+
     runtimeOnly("org.postgresql:postgresql")
+
+    compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBinding}")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
 }
